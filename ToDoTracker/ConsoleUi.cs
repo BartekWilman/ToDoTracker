@@ -28,9 +28,15 @@ namespace ToDoTracker
             Console.Write($"Wybierz funkcję ");
             return Console.ReadLine();
         }
+        public static void LoadFromFile(TodoStorage stor, TodoService serv)
+        {
+            serv.LoadItems(stor.Load());
+        }
         public static void MainLoop()
         {
             var service = new TodoService();
+            var staorage = new TodoStorage();
+            LoadFromFile(staorage, service );
             bool flag = true;
             string prompt;
             while (flag)
@@ -46,9 +52,12 @@ namespace ToDoTracker
                         break;
                     case "2":
                         service.MakeAndAdd();
+                        staorage.Save(service);
                         break;
                     case "3":
-                        service.CompleteTaskFromList(); break;
+                        service.CompleteTaskFromList(); 
+                        staorage.Save(service);
+                        break;
                     case "4":
                         Console.WriteLine("NARA ;)");
                         Console.ReadKey();

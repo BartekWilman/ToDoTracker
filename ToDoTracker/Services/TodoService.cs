@@ -43,6 +43,10 @@ namespace ToDoTracker
             }
         }
 
+        public void LoadItems(List<TodoItem> items)
+        {
+            _items = items;
+        }
         public void GiveMeLists()
         {
             IEnumerable<TodoItem> list;
@@ -112,6 +116,10 @@ namespace ToDoTracker
             {
                 Add(title, priorytet);
             }
+        }
+        public List<TodoItem> GetList()
+        {
+            return _items;
         }
     }
 }

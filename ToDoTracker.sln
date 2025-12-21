@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoTracker", "ToDoTracker\ToDoTracker.csproj", "{6F1290E5-2554-452A-BDE1-F0CB13840FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoTracker", "ToDoTracker\ToDoTracker.csproj", "{6F1290E5-2554-452A-BDE1-F0CB13840FAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "Elementy rozwiązania", "{99AFDDF4-91EA-4A8A-AC9B-8FC382EAC807}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
