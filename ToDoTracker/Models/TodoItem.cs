@@ -35,6 +35,19 @@ namespace ToDoTracker
             Priority = priority;
             Due = due;
         }
+        public void SetTitle(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Title is required", nameof(title));
+            Title = title.Trim();
+        }
+        public void SetPriority(Priority priority)
+        {
+            Priority = priority;
+        }
+        public void SetDue(DateTime due)
+        {
+            Due = due;
+        }
         public void MarkDone()
         {
             Status = TaskStatus.Done;

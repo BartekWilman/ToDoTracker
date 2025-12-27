@@ -34,6 +34,27 @@ namespace ToDoTracker
             _items.Remove(item);
             return true;
         }
+        public bool SetTitle(Guid id, string title)
+        {
+            var item = _items.FirstOrDefault(x=> x.Id == id);
+            if (item == null) return false;
+            item.SetTitle(title);
+            return true;
+        }
+        public bool SetPriority(Guid id, Priority priority)
+        {
+            var item = _items.FirstOrDefault(x => x.Id == id);
+            if (item == null) return false;
+            item.SetPriority(priority);
+            return true;
+        }
+        public bool SetDue(Guid id, DateTime due)
+        {
+            var item = _items.FirstOrDefault(x => x.Id == id);
+            if (item == null) return false;
+            item.SetDue(due);
+            return true;
+        }
 
         //nadpisanie listy (atrybutu)
         public void LoadItems(List<TodoItem> items)

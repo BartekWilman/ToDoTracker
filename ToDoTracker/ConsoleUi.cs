@@ -81,6 +81,8 @@ namespace ToDoTracker
                 serv.Add(title, priorytet);
             }
         }
+        
+        //Funkcja do odhaczania w ramach Active / Done lub usuwania zadań
         private static bool PickItemAndExecute(
             TodoService serv,
             bool allowDecline,
@@ -94,6 +96,7 @@ namespace ToDoTracker
                 Console.WriteLine("Lista nie zawiera elementów");
                 return false;
             }
+            Console.WriteLine(prompt.ToUpper());
             ShowList(list);
             TodoItem[] array = list.ToArray();
             Console.WriteLine(prompt);
@@ -116,6 +119,48 @@ namespace ToDoTracker
             action(array[n - 1]);
             return true;
         }
+        public static bool EditFromList(TodoService serv, TodoItem item)
+        {
+            Console.WriteLine("Podaj atrybut do zmiany:\n1. Nazwa zadania\n2. Priorytet zadania\n3. Data zadania");
+            string prompt = Console.ReadLine();
+            if (prompt == "1")
+            {
+                Console.Write("Podaj tytul zadania: ");
+                string title = Console.ReadLine();
+                return serv.SetTitle(item.Id, title);
+            }
+            if(prompt == "2")
+            {
+                Console.Write("Ustal priorytet zadania: ");
+                string pri;
+                Priority priorytet;
+                while (true)
+                {
+                    Console.WriteLine("Podaj priorytet\n1. Niski\n2. Sredni\n3. Wysoki");
+                    pri = Console.ReadLine();
+
+                    if (pri == "1") { priorytet = Priority.Low; break; }
+                    if (pri == "2") { priorytet = Priority.Medium; break; }
+                    if (pri == "3") { priorytet = Priority.High; break; }
+
+                    Console.WriteLine("Wybierz poziom priorytetu wpisując od 1 do 3");
+                }
+                return serv.SetPriority(item.Id, priorytet);
+            }
+            if(prompt == "3")
+            {
+                Console.WriteLine("Ustal konkretny termin wybierając 1, lub usuń całkowicie termin wybierając 0");
+                string newDate = Console.ReadLine();
+                if(newDate == "1")
+                {
+                    DateTime data = ConsoleUi.GiveMeDate();
+                    return serv.SetDue(item.Id, data);
+                }
+                return false;
+            }
+            Console.WriteLine("Anulowano");
+            return false;
+        }
         public static DateTime GiveMeDate()
         {
             Console.Write("Podaj rok: ");
@@ -129,7 +174,7 @@ namespace ToDoTracker
         }
         public static void ShowMenu()
         {
-            Console.WriteLine("TO DO TRACKER\n1. Pokaz zadania\n2. Dodaj zadanie\n3. Ukończ zadanie\n4. Usuń zadanie\n0. Zakończ działanie programu");
+            Console.WriteLine("TO DO TRACKER\n1. Pokaz zadania\n2. Dodaj zadanie\n3. Ukończ zadanie\n4. Edytuj zadanie\n5. Usuń zadanie\n0. Zakończ działanie programu");
         }
         public static string Prompt()
         {
@@ -173,6 +218,13 @@ namespace ToDoTracker
                         storage.Save(service);
                         break;
                     case "4":
+                        bool edit = PickItemAndExecute(
+                            service,
+                            allowDecline: true,
+                            prompt: "Wybierz zadanie do edycji",
+                            action: item => EditFromList(service, item));
+                        break;
+                    case "5":
                         bool del = PickItemAndExecute(
                             service,
                             allowDecline: true,
